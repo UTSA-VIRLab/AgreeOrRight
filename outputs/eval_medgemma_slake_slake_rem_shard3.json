@@ -1,0 +1,178 @@
+{
+  "model_key": "medgemma",
+  "model_id": "google/medgemma-4b-it",
+  "short_name": "MedGemma",
+  "dataset": "slake",
+  "split": "test",
+  "n_images": 142,
+  "lvase": {
+    "n_images": 40,
+    "n_samples": 5,
+    "alpha": 0.5,
+    "mean": 0.5601133079620827,
+    "std": 0.03746949904843567,
+    "per_image": [
+      {
+        "image_idx": 0,
+        "lvase_score": 0.5906573663030922
+      },
+      {
+        "image_idx": 1,
+        "lvase_score": 0.5360758741558043
+      },
+      {
+        "image_idx": 2,
+        "lvase_score": 0.5566132582323184
+      },
+      {
+        "image_idx": 3,
+        "lvase_score": 0.5481761806868564
+      },
+      {
+        "image_idx": 4,
+        "lvase_score": 0.5269394264632431
+      },
+      {
+        "image_idx": 5,
+        "lvase_score": 0.491600228638306
+      },
+      {
+        "image_idx": 6,
+        "lvase_score": 0.5951728065392102
+      },
+      {
+        "image_idx": 7,
+        "lvase_score": 0.5606971430642669
+      },
+      {
+        "image_idx": 8,
+        "lvase_score": 0.5350852515138509
+      },
+      {
+        "image_idx": 9,
+        "lvase_score": 0.5347832352802674
+      },
+      {
+        "image_idx": 10,
+        "lvase_score": 0.6288404813359807
+      },
+      {
+        "image_idx": 11,
+        "lvase_score": 0.5704278807378735
+      },
+      {
+        "image_idx": 12,
+        "lvase_score": 0.548291626169856
+      },
+      {
+        "image_idx": 13,
+        "lvase_score": 0.5382800892414585
+      },
+      {
+        "image_idx": 14,
+        "lvase_score": 0.6218895865458194
+      },
+      {
+        "image_idx": 15,
+        "lvase_score": 0.6319067842590151
+      },
+      {
+        "image_idx": 16,
+        "lvase_score": 0.5737175091856334
+      },
+      {
+        "image_idx": 17,
+        "lvase_score": 0.5553939069814292
+      },
+      {
+        "image_idx": 18,
+        "lvase_score": 0.5309246222902534
+      },
+      {
+        "image_idx": 19,
+        "lvase_score": 0.5402714308760832
+      },
+      {
+        "image_idx": 20,
+        "lvase_score": 0.6072835265323996
+      },
+      {
+        "image_idx": 21,
+        "lvase_score": 0.5783583645193304
+      },
+      {
+        "image_idx": 22,
+        "lvase_score": 0.5341200413203995
+      },
+      {
+        "image_idx": 23,
+        "lvase_score": 0.5622110339109038
+      },
+      {
+        "image_idx": 24,
+        "lvase_score": 0.5486321512848412
+      },
+      {
+        "image_idx": 25,
+        "lvase_score": 0.5823317983613513
+      },
+      {
+        "image_idx": 26,
+        "lvase_score": 0.542384497197518
+      },
+      {
+        "image_idx": 27,
+        "lvase_score": 0.5264403361288568
+      },
+      {
+        "image_idx": 28,
+        "lvase_score": 0.5119530905090872
+      },
+      {
+        "image_idx": 29,
+        "lvase_score": 0.6061497868657518
+      },
+      {
+        "image_idx": 30,
+        "lvase_score": 0.543672100484453
+      },
+      {
+        "image_idx": 31,
+        "lvase_score": 0.659857751175721
+      },
+      {
+        "image_idx": 32,
+        "lvase_score": 0.5547874452175883
+      },
+      {
+        "image_idx": 33,
+        "lvase_score": 0.5913395482301645
+      },
+      {
+        "image_idx": 34,
+        "lvase_score": 0.5657906892507839
+      },
+      {
+        "image_idx": 35,
+        "lvase_score": 0.5866849214271945
+      },
+      {
+        "image_idx": 36,
+        "lvase_score": 0.5436745577932346
+      },
+      {
+        "image_idx": 37,
+        "lvase_score": 0.48299763963161535
+      },
+      {
+        "image_idx": 38,
+        "lvase_score": 0.5127944043477205
+      },
+      {
+        "image_idx": 39,
+        "lvase_score": 0.5473239457937761
+      }
+    ],
+    "status": "partial"
+  }
+}

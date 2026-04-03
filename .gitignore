@@ -1,0 +1,28 @@
+# Raw datasets (19GB+)
+data/
+
+# Model weights
+models/checkpoints/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Figures (images and generated assets)
+outputs/figures/*.png
+outputs/figures/*.pdf
+outputs/figures/*.pptx
+
+# Logs
+outputs/logs/
+
+# Sample images
+outputs/dataset_samples/
+
+# Backups and temp
+*.bak
+outputs/smoke_test_backup/
+outputs/l40_pathvqa/
+
+# Claude Code config
+.claude/

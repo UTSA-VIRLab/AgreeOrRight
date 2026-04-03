@@ -1,0 +1,38 @@
+{
+  "L-VASE_vs_Resistance Rate": {
+    "pearson_r": 0.1795081388499157,
+    "pearson_p": 0.772676612504955,
+    "spearman_rho": 0.3,
+    "spearman_p": 0.6238376647810728
+  },
+  "Baseline NIA_vs_Resistance Rate": {
+    "pearson_r": 0.24908224870953724,
+    "pearson_p": 0.6861691926888901,
+    "spearman_rho": 0.6,
+    "spearman_p": 0.28475697986529375
+  },
+  "L-VASE_vs_GSS": {
+    "pearson_r": 0.12859418831404154,
+    "pearson_p": 0.8367211761059543,
+    "spearman_rho": 0.0,
+    "spearman_p": 1.0
+  },
+  "Baseline NIA_vs_GSS": {
+    "pearson_r": 0.984117621759647,
+    "pearson_p": 0.0023970097756868085,
+    "spearman_rho": 0.6,
+    "spearman_p": 0.28475697986529375
+  },
+  "L-VASE_vs_Baseline NIA": {
+    "pearson_r": 0.18266431384749396,
+    "pearson_p": 0.7687244855106478,
+    "spearman_rho": 0.6,
+    "spearman_p": 0.28475697986529375
+  },
+  "GSS_vs_Resistance Rate": {
+    "pearson_r": 0.2485189554948063,
+    "pearson_p": 0.6868638470990904,
+    "spearman_rho": 0.7999999999999999,
+    "spearman_p": 0.10408803866182788
+  }
+}

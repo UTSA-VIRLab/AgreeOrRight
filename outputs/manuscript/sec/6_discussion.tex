@@ -1,0 +1,19 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\noindent\textbf{Why are grounding and sycophancy anti-correlated?}
+We hypothesize that this tradeoff arises from the alignment training process. Models trained with stronger RLHF or instruction-tuning to follow user instructions become more responsive to user feedback---including incorrect feedback. Qwen3-VL and MedGemma, which show the lowest hallucination rates, have undergone extensive alignment that makes them both more accurate \emph{and} more obedient. This creates a fundamental tension: the same training signal that teaches a model to ``listen to the user'' also makes it vulnerable to sycophantic pressure.
+
+\noindent\textbf{Clinical implications.}
+In a deployment scenario, a physician interacting with a VLM may unconsciously bias the model toward their initial hypothesis. Our results show that the most accurate models are precisely the ones most susceptible to this bias. A system using Qwen3-VL would provide excellent initial readings but would provide no independent verification---defeating the purpose of a decision support tool.
+
+\noindent\textbf{The FMEA perspective.}
+Our \csi{} metric draws from FMEA methodology (IEC 60812, ISO 14971), which is already mandated for medical device certification. By mapping VLM failure modes to FMEA's Occurrence-Severity-Detection framework, we provide a scoring methodology that aligns with existing regulatory frameworks. The geometric mean ensures that a model cannot compensate for catastrophic failure on one axis with strong performance on another---a principle embedded in FMEA for safety-critical systems.
+
+\noindent\textbf{Limitations.}
+Our evaluation has several limitations.
+(1)~We evaluate only 7--8B parameter models; larger models may exhibit different tradeoff characteristics.
+(2)~Our pressure prompts are in English and simulate Western clinical hierarchies; sycophancy patterns may differ across languages and clinical cultures.
+(3)~\lvase{} measures hallucination propensity via entropy, not factual correctness directly; a model with high entropy may still produce correct answers.
+(4)~Our sycophancy protocol uses explicit verbal pressure; implicit biases (e.g., framing effects) are not captured.
+(5)~We use a fixed mixing coefficient $\alpha{=}1.0$; sensitivity analysis across $\alpha$ values is left to future work.

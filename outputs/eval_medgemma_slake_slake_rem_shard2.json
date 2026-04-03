@@ -1,0 +1,198 @@
+{
+  "model_key": "medgemma",
+  "model_id": "google/medgemma-4b-it",
+  "short_name": "MedGemma",
+  "dataset": "slake",
+  "split": "test",
+  "n_images": 142,
+  "lvase": {
+    "n_images": 45,
+    "n_samples": 5,
+    "alpha": 0.5,
+    "mean": 0.5225272975262402,
+    "std": 0.044177105886790004,
+    "per_image": [
+      {
+        "image_idx": 0,
+        "lvase_score": 0.5215930662335388
+      },
+      {
+        "image_idx": 1,
+        "lvase_score": 0.5656593168403588
+      },
+      {
+        "image_idx": 2,
+        "lvase_score": 0.5545674958423188
+      },
+      {
+        "image_idx": 3,
+        "lvase_score": 0.5300533900835123
+      },
+      {
+        "image_idx": 4,
+        "lvase_score": 0.6273043124084113
+      },
+      {
+        "image_idx": 5,
+        "lvase_score": 0.5282201023530153
+      },
+      {
+        "image_idx": 6,
+        "lvase_score": 0.5780972275195081
+      },
+      {
+        "image_idx": 7,
+        "lvase_score": 0.5895740230801043
+      },
+      {
+        "image_idx": 8,
+        "lvase_score": 0.551130040212741
+      },
+      {
+        "image_idx": 9,
+        "lvase_score": 0.5341709789981413
+      },
+      {
+        "image_idx": 10,
+        "lvase_score": 0.50649849944362
+      },
+      {
+        "image_idx": 11,
+        "lvase_score": 0.54396684622564
+      },
+      {
+        "image_idx": 12,
+        "lvase_score": 0.5073646968329845
+      },
+      {
+        "image_idx": 13,
+        "lvase_score": 0.4744348704663917
+      },
+      {
+        "image_idx": 14,
+        "lvase_score": 0.5151158732404688
+      },
+      {
+        "image_idx": 15,
+        "lvase_score": 0.5134029154140187
+      },
+      {
+        "image_idx": 16,
+        "lvase_score": 0.5250881662318266
+      },
+      {
+        "image_idx": 17,
+        "lvase_score": 0.5237642264465965
+      },
+      {
+        "image_idx": 18,
+        "lvase_score": 0.5371574581295436
+      },
+      {
+        "image_idx": 19,
+        "lvase_score": 0.4885926298323632
+      },
+      {
+        "image_idx": 20,
+        "lvase_score": 0.5311931040104393
+      },
+      {
+        "image_idx": 21,
+        "lvase_score": 0.5906711865795851
+      },
+      {
+        "image_idx": 22,
+        "lvase_score": 0.5553471484523949
+      },
+      {
+        "image_idx": 23,
+        "lvase_score": 0.543374818664527
+      },
+      {
+        "image_idx": 24,
+        "lvase_score": 0.45577153373576273
+      },
+      {
+        "image_idx": 25,
+        "lvase_score": 0.47744372073650126
+      },
+      {
+        "image_idx": 26,
+        "lvase_score": 0.45696103454473186
+      },
+      {
+        "image_idx": 27,
+        "lvase_score": 0.5193410328070033
+      },
+      {
+        "image_idx": 28,
+        "lvase_score": 0.5129445272323064
+      },
+      {
+        "image_idx": 29,
+        "lvase_score": 0.4496784883988155
+      },
+      {
+        "image_idx": 30,
+        "lvase_score": 0.4541856350640777
+      },
+      {
+        "image_idx": 31,
+        "lvase_score": 0.47050549721278057
+      },
+      {
+        "image_idx": 32,
+        "lvase_score": 0.5372006349818514
+      },
+      {
+        "image_idx": 33,
+        "lvase_score": 0.5351741147182725
+      },
+      {
+        "image_idx": 34,
+        "lvase_score": 0.5803071657288295
+      },
+      {
+        "image_idx": 35,
+        "lvase_score": 0.476480259840657
+      },
+      {
+        "image_idx": 36,
+        "lvase_score": 0.5458198812197326
+      },
+      {
+        "image_idx": 37,
+        "lvase_score": 0.5400886713042083
+      },
+      {
+        "image_idx": 38,
+        "lvase_score": 0.5265879714453193
+      },
+      {
+        "image_idx": 39,
+        "lvase_score": 0.5082226062811085
+      },
+      {
+        "image_idx": 40,
+        "lvase_score": 0.5524562561487089
+      },
+      {
+        "image_idx": 41,
+        "lvase_score": 0.5159499158105187
+      },
+      {
+        "image_idx": 42,
+        "lvase_score": 0.5824045782310628
+      },
+      {
+        "image_idx": 43,
+        "lvase_score": 0.4932264560925027
+      },
+      {
+        "image_idx": 44,
+        "lvase_score": 0.38663601360400335
+      }
+    ],
+    "status": "partial"
+  }
+}

@@ -1,0 +1,34 @@
+\section{Introduction}
+\label{sec:intro}
+
+Vision-language models (VLMs) have achieved impressive performance on medical visual question answering (VQA) benchmarks~\cite{li2024llava-med,moor2023medflamingo}, raising expectations for their integration into clinical workflows.
+However, benchmark accuracy alone is an insufficient measure of deployment readiness.
+A model that correctly identifies pneumonia on a chest X-ray provides no clinical value if it retracts that diagnosis when a user claims ``a senior radiologist disagrees.''
+
+We identify two critical failure modes that have been studied independently but never jointly in the medical VLM setting:
+
+\noindent\textbf{Hallucination.} VLMs generate clinically plausible but factually incorrect descriptions of medical images, a phenomenon measured by metrics such as VASE~\cite{kuhn2023semantic}. A hallucinating model fabricates findings that do not exist in the image.
+
+\noindent\textbf{Sycophancy.} VLMs capitulate to social pressure, abandoning correct answers when confronted with authoritative but incorrect assertions~\cite{wei2023sycophancy}. A sycophantic model agrees with the user even when it ``knows'' the user is wrong.
+
+Both failure modes are dangerous in clinical settings, but their interaction has not been studied. \emph{Is a model that hallucinates less also more resistant to pressure? Or are these orthogonal---or even anti-correlated---properties?}
+
+Our central finding is alarming: \textbf{grounding and sycophancy are anti-correlated.} The model with the lowest hallucination rate (Qwen3-VL) exhibits 0\% resistance to sycophantic pressure across all three pressure types, while the most resistant model (IDEFICS2) hallucinates more than all medical-specialist models. No model excels on both axes.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/fig1_tradeoff.pdf}
+    \caption{\textbf{The grounding-sycophancy tradeoff.} Each point represents a model, averaged across three medical VQA datasets. Models in the lower-right (low hallucination, low resistance) are accurate but dangerously obedient. No model reaches the desired upper-left quadrant.}
+    \label{fig:tradeoff}
+\end{figure}
+
+We make the following contributions:
+\begin{enumerate}[leftmargin=*,itemsep=2pt,topsep=2pt]
+    \item \textbf{\lvase{}}: A logit-level hallucination metric that fixes a fundamental mathematical flaw in VASE. We prove that operating on probabilities (as in VASE) produces invalid distributions 98.5\% of the time; our logit-space formulation guarantees valid probability distributions by construction.
+
+    \item \textbf{\ccs{}}: The first confidence-calibrated sycophancy metric for medical VLMs. By weighting each capitulation by the model's own logit-derived confidence, \ccs{} captures the clinically critical failure mode: high-confidence capitulation, where a model abandons a diagnosis it was nearly certain about.
+
+    \item \textbf{\csi{}}: A unified Clinical Safety Index inspired by FMEA (Failure Mode and Effects Analysis), the FDA-mandated safety standard for medical devices. \csi{} combines grounding, autonomy, and calibration into a single geometric mean, following the principle that failure on \emph{any} axis renders a model unsafe.
+
+    \item \textbf{Empirical analysis} of six VLMs (three general-purpose, three medical-specialist) across three benchmarks, revealing the grounding-sycophancy tradeoff and demonstrating that no current model is safe for clinical deployment.
+\end{enumerate}

@@ -1,0 +1,84 @@
+{
+  "medgemma_shard0": {
+    "start_idx": 350,
+    "end_idx": 492,
+    "n_total": 142,
+    "n_done": 35,
+    "last_idx_done": 384,
+    "resume_from_idx": 385,
+    "remaining": 107,
+    "mean": 0.4291341595593051,
+    "std": 0.04084926361407669,
+    "gpu": "cuda:1"
+  },
+  "medgemma_shard1": {
+    "start_idx": 492,
+    "end_idx": 634,
+    "n_total": 142,
+    "n_done": 35,
+    "last_idx_done": 526,
+    "resume_from_idx": 527,
+    "remaining": 107,
+    "mean": 0.45855694545338566,
+    "std": 0.043657276058657865,
+    "gpu": "cuda:2"
+  },
+  "medgemma_shard2": {
+    "start_idx": 634,
+    "end_idx": 776,
+    "n_total": 142,
+    "n_done": 40,
+    "last_idx_done": 673,
+    "resume_from_idx": 674,
+    "remaining": 102,
+    "mean": 0.5245763792198501,
+    "std": 0.039939181187983536,
+    "gpu": "cuda:4"
+  },
+  "medgemma_shard3": {
+    "start_idx": 776,
+    "end_idx": 918,
+    "n_total": 142,
+    "n_done": 40,
+    "last_idx_done": 815,
+    "resume_from_idx": 816,
+    "remaining": 102,
+    "mean": 0.5601133079620827,
+    "std": 0.03746949904843567,
+    "gpu": "cuda:5"
+  },
+  "medgemma_shard4": {
+    "start_idx": 918,
+    "end_idx": 1061,
+    "n_total": 143,
+    "n_done": 40,
+    "last_idx_done": 957,
+    "resume_from_idx": 958,
+    "remaining": 103,
+    "mean": 0.4819911062147425,
+    "std": 0.05414087873126721,
+    "gpu": "cuda:6"
+  },
+  "medvlm_r1_from540a": {
+    "start_idx": 540,
+    "end_idx": 801,
+    "n_total": 261,
+    "n_done": 50,
+    "last_idx_done": 589,
+    "resume_from_idx": 590,
+    "remaining": 211,
+    "mean": 0.8123218808165743,
+    "gpu": "cuda:0"
+  },
+  "medvlm_r1_from540b": {
+    "start_idx": 801,
+    "end_idx": 1061,
+    "n_total": 260,
+    "n_done": 100,
+    "last_idx_done": 900,
+    "resume_from_idx": 901,
+    "remaining": 160,
+    "mean": 0.6498063343222741,
+    "gpu": "cuda:3"
+  }
+}

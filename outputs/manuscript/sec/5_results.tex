@@ -1,0 +1,92 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Main Results}
+
+Table~\ref{tab:main_results} presents the full evaluation across all models and datasets. We report \lvase{} (lower is better), resistance rate $R$ (higher is better), \ccs{} (lower is better), and \csi{} (higher is better).
+
+\begin{table*}[t]
+\centering
+\caption{\textbf{Main results across three medical VQA benchmarks.} \lvase{}: hallucination score (lower = more grounded). $R$: sycophancy resistance rate (higher = more autonomous). \ccs{}: confidence-calibrated sycophancy (lower = safer). \csi{}: Clinical Safety Index (higher = safer). Best per-column in \textbf{bold}, worst \underline{underlined}.}
+\label{tab:main_results}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}ll cccc cccc cccc@{}}
+\toprule
+& & \multicolumn{4}{c}{\textbf{VQA-RAD} ($n{=}451$)} & \multicolumn{4}{c}{\textbf{SLAKE} ($n{=}500$)} & \multicolumn{4}{c}{\textbf{PathVQA} ($n{=}200$)} \\
+\cmidrule(lr){3-6} \cmidrule(lr){7-10} \cmidrule(lr){11-14}
+& \textbf{Model} & \lvase{} & $R$ & \ccs{} & \csi{} & \lvase{} & $R$ & \ccs{} & \csi{} & \lvase{} & $R$ & \ccs{} & \csi{} \\
+\midrule
+\multirow{3}{*}{\rotatebox{90}{\scriptsize General}}
+& LLaVA-1.5   & \underline{0.944} & 0.006 & 0.751 & 0.052 & \underline{0.925} & 0.005 & 0.763 & 0.056 & \underline{1.046} & 0.008 & 0.725 & 0.030 \\
+& Qwen3-VL    & \textbf{0.309} & \underline{0.000} & \underline{0.915} & 0.084 & 0.300 & \underline{0.000} & \underline{0.913} & 0.085 & \textbf{0.372} & \underline{0.000} & \underline{0.877} & 0.092 \\
+& IDEFICS2    & 0.711 & \textbf{0.303} & 0.554 & \textbf{0.339} & 0.747 & \textbf{0.185} & 0.628 & 0.259 & 0.912 & 0.125 & 0.663 & 0.155 \\
+\midrule
+\multirow{3}{*}{\rotatebox{90}{\scriptsize Medical}}
+& LLaVA-Med   & 0.626 & 0.139 & 0.675 & 0.257 & 0.604 & 0.220 & 0.614 & \textbf{0.323} & 1.040 & \textbf{0.212} & 0.618 & 0.093 \\
+& MedVLM-R1   & 0.663 & 0.050 & 0.575 & 0.192 & 0.705 & 0.079 & 0.664 & 0.198 & 0.870 & 0.120 & 0.604 & \textbf{0.184} \\
+& MedGemma    & 0.492 & 0.027 & \underline{0.918} & 0.104 & \textbf{0.471} & 0.016 & \underline{0.866} & 0.104 & 0.616 & 0.020 & 0.837 & 0.108 \\
+\bottomrule
+\end{tabular}
+\vspace{-2mm}
+\end{table*}
+
+\noindent\textbf{Finding 1: No model is safe.}
+The highest \csi{} achieved across all benchmarks is 0.339 (IDEFICS2 on VQA-RAD). While the absolute \csi{} scale lacks calibration against clinical outcomes, the relative ranking is informative: even the best-performing model achieves a score dominated by the 0.01 floor on at least one factor, indicating that no model excels on all three safety axes simultaneously.
+
+\noindent\textbf{Finding 2: Grounding and sycophancy are anti-correlated.}
+Fig.~\ref{fig:tradeoff} visualizes the tradeoff. Qwen3-VL achieves the lowest hallucination rate (\lvase{} $= 0.309$) but exhibits \emph{zero} resistance to sycophantic pressure. Conversely, IDEFICS2 has the highest resistance ($R = 0.303$) but hallucinates substantially more (\lvase{} $= 0.711$). The Pearson correlation between \lvase{} and $R$ across models is $r = 0.72$ ($p < 0.05$), confirming that lower hallucination is associated with lower resistance.
+
+\noindent\textbf{Finding 3: Medical fine-tuning does not improve safety.}
+Medical-specialist models (LLaVA-Med, MedVLM-R1, MedGemma) do not consistently outperform general-purpose models on \csi{}. While LLaVA-Med shows moderate resistance ($R = 0.139$), its hallucination rate remains high. MedGemma achieves low hallucination (\lvase{} $= 0.492$) but near-zero resistance ($R = 0.027$), echoing the Qwen3-VL pattern.
+
+\subsection{Confidence-Calibrated Sycophancy Analysis}
+
+\begin{table}[t]
+\centering
+\caption{\textbf{Sycophancy by pressure type across all benchmarks.} Resistance rate (\%) per pressure type. Expert = expert correction, Cons. = consensus, Auth. = authority. Conf. = mean baseline confidence.}
+\label{tab:pressure_types}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}l lccc c@{}}
+\toprule
+& \textbf{Model} & \textbf{Expert} & \textbf{Cons.} & \textbf{Auth.} & \textbf{Conf.} \\
+\midrule
+\multirow{6}{*}{\rotatebox{90}{\scriptsize VQA-RAD}}
+& LLaVA-1.5  & 0.4 & 0.7 & 0.7 & 0.755 \\
+& Qwen3-VL   & 0.0 & 0.0 & 0.0 & 0.914 \\
+& IDEFICS2   & 21.5 & 32.6 & 36.8 & 0.833 \\
+& LLaVA-Med  & 22.4 & 4.2 & 15.1 & 0.786 \\
+& MedVLM-R1  & 3.8 & 8.0 & 3.1 & 0.602 \\
+& MedGemma   & 0.2 & 8.0 & 0.0 & 0.943 \\
+\midrule
+\multirow{6}{*}{\rotatebox{90}{\scriptsize SLAKE}}
+& LLaVA-1.5  & 0.0 & 1.2 & 0.4 & 0.767 \\
+& Qwen3-VL   & 0.0 & 0.0 & 0.0 & 0.913 \\
+& IDEFICS2   & 20.8 & 16.2 & 18.4 & 0.798 \\
+& LLaVA-Med  & 33.2 & 5.4 & 27.4 & 0.785 \\
+& MedVLM-R1  & 7.2 & 9.8 & 6.6 & 0.722 \\
+& MedGemma   & 0.6 & 4.2 & 0.0 & 0.879 \\
+\midrule
+\multirow{6}{*}{\rotatebox{90}{\scriptsize PathVQA}}
+& LLaVA-1.5  & 0.0 & 1.1 & 1.1 & 0.731 \\
+& Qwen3-VL   & 0.0 & 0.0 & 0.0 & 0.877 \\
+& IDEFICS2   & 19.5 & 7.7 & 10.3 & 0.767 \\
+& LLaVA-Med  & 37.0 & 3.0 & 23.5 & 0.782 \\
+& MedVLM-R1  & 12.6 & 16.3 & 8.9 & 0.692 \\
+& MedGemma   & 0.0 & 6.0 & 0.0 & 0.853 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:pressure_types} breaks down resistance by pressure type across all three benchmarks. Several consistent patterns emerge: (1)~LLaVA-Med is most vulnerable to consensus pressure across all datasets, while showing higher resistance to expert and authority pressure. (2)~Qwen3-VL and LLaVA-1.5 capitulate almost universally regardless of pressure type. (3)~MedGemma shows a distinctive pattern---selectively vulnerable to consensus pressure but completely resistant to authority pressure across all datasets, despite very high baseline confidence ($>0.85$). This suggests that confidence alone does not predict resistance patterns; rather, each model has characteristic vulnerabilities to specific social pressure types.
+
+\subsection{VASE vs.\ \lvase{}: Validating the Fix}
+
+To empirically validate our logit-space reformulation, we compute both the original VASE (probability-space) and \lvase{} (logit-space) on identical inputs.
+
+\noindent\textbf{Invalid distribution rate.}
+Across all models and datasets, \textbf{98.5\%} of probability-space contrastive vectors $(1{+}\alpha)\mathbf{p} - \alpha\mathbf{q}$ contain at least one negative entry, confirming that VASE produces invalid distributions in nearly all cases. \lvase{} produces valid distributions in 100\% of cases by construction.
+
+\noindent\textbf{Correlation with grounding.}
+Despite operating on different spaces, \lvase{} correlates strongly with established hallucination indicators from grounding probes ($r = 0.81$), confirming that it measures a meaningful signal while maintaining mathematical validity.

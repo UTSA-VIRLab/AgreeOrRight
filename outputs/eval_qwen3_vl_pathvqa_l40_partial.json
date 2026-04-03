@@ -1,0 +1,200 @@
+{
+  "model_key": "qwen3-vl",
+  "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+  "short_name": "Qwen3-VL",
+  "dataset": "pathvqa",
+  "split": "test",
+  "n_images": 270,
+  "n_total_target": 500,
+  "status": "reconstructed_from_l40_logs",
+  "source": "desai-lambda1 L40S (crashed/rebooted)",
+  "lvase": {
+    "n_images": 270,
+    "n_samples": 5,
+    "alpha": 0.5,
+    "mean": 0.3619,
+    "per_shard": [
+      {
+        "shard": 0,
+        "start_idx": 0,
+        "n_target": 63,
+        "n_done": 40,
+        "mean": 0.3595,
+        "entries": [
+          {
+            "at": 10,
+            "mean": 0.3254
+          },
+          {
+            "at": 20,
+            "mean": 0.3315
+          },
+          {
+            "at": 30,
+            "mean": 0.3501
+          },
+          {
+            "at": 40,
+            "mean": 0.3595
+          }
+        ]
+      },
+      {
+        "shard": 1,
+        "start_idx": 63,
+        "n_target": 63,
+        "n_done": 30,
+        "mean": 0.3448,
+        "entries": [
+          {
+            "at": 10,
+            "mean": 0.3579
+          },
+          {
+            "at": 20,
+            "mean": 0.344
+          },
+          {
+            "at": 30,
+            "mean": 0.3448
+          }
+        ]
+      },
+      {
+        "shard": 2,
+        "start_idx": 126,
+        "n_target": 63,
+        "n_done": 40,
+        "mean": 0.3907,
+        "entries": [
+          {
+            "at": 10,
+            "mean": 0.4288
+          },
+          {
+            "at": 20,
+            "mean": 0.4215
+          },
+          {
+            "at": 30,
+            "mean": 0.3983
+          },
+          {
+            "at": 40,
+            "mean": 0.3907
+          }
+        ]
+      },
+      {
+        "shard": 3,
+        "start_idx": 189,
+        "n_target": 63,
+        "n_done": 40,
+        "mean": 0.3721,
+        "entries": [
+          {
+            "at": 10,
+            "mean": 0.3873
+          },
+          {
+            "at": 20,
+            "mean": 0.3785
+          },
+          {
+            "at": 30,
+            "mean": 0.3756
+          },
+          {
+            "at": 40,
+            "mean": 0.3721
+          }
+        ]
+      },
+      {
+        "shard": 4,
+        "start_idx": 252,
+        "n_target": 63,
+        "n_done": 30,
+        "mean": 0.3382,
+        "entries": [
+          {
+            "at": 10,
+            "mean": 0.3774
+          },
+          {
+            "at": 20,
+            "mean": 0.3592
+          },
+          {
+            "at": 30,
+            "mean": 0.3382
+          }
+        ]
+      },
+      {
+        "shard": 5,
+        "start_idx": 315,
+        "n_target": 63,
+        "n_done": 30,
+        "mean": 0.3815,
+        "entries": [
+          {
+            "at": 10,
+            "mean": 0.3746
+          },
+          {
+            "at": 20,
+            "mean": 0.3883
+          },
+          {
+            "at": 30,
+            "mean": 0.3815
+          }
+        ]
+      },
+      {
+        "shard": 6,
+        "start_idx": 378,
+        "n_target": 63,
+        "n_done": 30,
+        "mean": 0.3632,
+        "entries": [
+          {
+            "at": 10,
+            "mean": 0.3756
+          },
+          {
+            "at": 20,
+            "mean": 0.3695
+          },
+          {
+            "at": 30,
+            "mean": 0.3632
+          }
+        ]
+      },
+      {
+        "shard": 7,
+        "start_idx": 441,
+        "n_target": 59,
+        "n_done": 30,
+        "mean": 0.3328,
+        "entries": [
+          {
+            "at": 10,
+            "mean": 0.3333
+          },
+          {
+            "at": 20,
+            "mean": 0.3314
+          },
+          {
+            "at": 30,
+            "mean": 0.3328
+          }
+        ]
+      }
+    ],
+    "status": "partial_reconstructed"
+  }
+}

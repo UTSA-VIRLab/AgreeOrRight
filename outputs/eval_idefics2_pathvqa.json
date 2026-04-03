@@ -1,0 +1,38 @@
+{
+  "model_key": "idefics2",
+  "model_id": "HuggingFaceM4/idefics2-8b",
+  "short_name": "IDEFICS2",
+  "dataset": "pathvqa",
+  "split": "test",
+  "n_images": 500,
+  "lvase": {
+    "n_images": 5,
+    "n_samples": 5,
+    "alpha": 0.5,
+    "mean": 0.9293497049124199,
+    "std": 0.06927656340037727,
+    "per_image": [
+      {
+        "image_idx": 0,
+        "lvase_score": 0.9986590253518444
+      },
+      {
+        "image_idx": 1,
+        "lvase_score": 0.8923364594642987
+      },
+      {
+        "image_idx": 2,
+        "lvase_score": 0.9177418167286097
+      },
+      {
+        "image_idx": 3,
+        "lvase_score": 0.8255344786930384
+      },
+      {
+        "image_idx": 4,
+        "lvase_score": 1.012476744324308
+      }
+    ],
+    "status": "partial"
+  }
+}

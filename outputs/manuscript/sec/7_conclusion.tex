@@ -1,0 +1,8 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We introduce a framework for jointly evaluating hallucination and sycophancy in medical VLMs, revealing a previously undocumented tradeoff: the most visually grounded models are simultaneously the most sycophantic. Our three metrics---\lvase{}, \ccs{}, and \csi{}---provide complementary views of clinical safety, from mathematical correctness (fixing VASE's invalid distributions) to confidence-calibrated capitulation measurement to unified FMEA-style scoring.
+
+Our evaluation of six open-weight 7--8B VLMs across three benchmarks yields a clear conclusion: \textbf{no tested model achieves strong performance on both axes simultaneously.} The best \csi{} score (0.339) reflects the geometric mean penalty of failing on even one safety factor, and the most visually grounded model (Qwen3-VL) exhibits 0\% resistance across all 3,453 pressure responses.
+
+These findings have immediate implications for the medical AI community: (1)~evaluating VLMs on accuracy alone is dangerously incomplete; (2)~medical fine-tuning does not inherently improve safety; and (3)~new training paradigms are needed that can simultaneously optimize for grounding and autonomy. We release our evaluation framework to support this effort.

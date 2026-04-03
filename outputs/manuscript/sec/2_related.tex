@@ -1,0 +1,19 @@
+\section{Related Work}
+\label{sec:related}
+
+\noindent\textbf{Medical Vision-Language Models.}
+Recent VLMs have been adapted for medical imaging through domain-specific pretraining~\cite{li2024llava-med,moor2023medflamingo} or instruction tuning on clinical data~\cite{pellegrini2023radialog,bannur2024maira2}.
+These models are typically evaluated on medical VQA benchmarks including VQA-RAD~\cite{lau2018vqarad}, SLAKE~\cite{liu2021slake}, and PathVQA~\cite{he2020pathvqa}, using accuracy-based metrics that measure correctness but not safety.
+
+\noindent\textbf{Hallucination in VLMs.}
+Hallucination evaluation has received growing attention through benchmarks such as POPE~\cite{li2023pope}, HALT-MedVQA~\cite{wang2024halt}, and probing methods based on semantic entropy~\cite{kuhn2023semantic}.
+VASE extends semantic entropy to the visual domain by contrasting model responses to original and distorted images.
+However, as we demonstrate in Sec.~\ref{sec:lvase}, the original VASE formulation operates on probability space, producing invalid distributions in the vast majority of cases.
+
+\noindent\textbf{Sycophancy in Language Models.}
+Sycophancy---the tendency of models to agree with users regardless of correctness---has been documented in LLMs~\cite{wei2023sycophancy,sharma2024sycophancy} and recently in medical VLMs through EchoBench~\cite{chen2025echobench} and related work~\cite{zhang2025medsynco}.
+These studies measure binary resistance rates (did the model change its answer?) but do not account for the model's confidence in its original response.
+A model that capitulates on a guess is qualitatively different from one that abandons a near-certain diagnosis---a distinction our \ccs{} metric captures.
+
+\noindent\textbf{Gap.}
+No prior work jointly evaluates hallucination and sycophancy in medical VLMs, quantifies their interaction, or provides a unified safety score. Our framework bridges this gap.

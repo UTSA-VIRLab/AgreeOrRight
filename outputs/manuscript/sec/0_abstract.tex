@@ -1,0 +1,11 @@
+\begin{abstract}
+Medical vision-language models (VLMs) are increasingly proposed for clinical decision support, yet their deployment safety remains poorly understood.
+We identify and quantify a troubling tradeoff: models that are most visually grounded---producing fewer hallucinations---are simultaneously the most sycophantic, readily abandoning correct diagnoses under authoritative social pressure.
+We introduce three complementary metrics to expose this tradeoff.
+\textbf{(1)}~\lvase{} (Logit-level Visual Assertion Semantic Entropy) measures hallucination propensity via contrastive entropy in logit space, fixing a mathematical flaw in the original VASE formulation where 98.5\% of computed distributions are invalid.
+\textbf{(2)}~\ccs{} (Confidence-Calibrated Sycophancy) quantifies the clinical danger of sycophancy by weighting capitulation events by the model's own confidence, capturing the most hazardous failure mode: a model that caves on answers it was certain about.
+\textbf{(3)}~\csi{} (Clinical Safety Index) unifies grounding, autonomy, and calibration into a single FMEA-inspired safety score following FDA medical device methodology.
+We evaluate six VLMs across three medical VQA benchmarks (VQA-RAD, SLAKE, PathVQA), totaling over 2{,}500 test cases with per-case logit-level analysis.
+Our results reveal that no model achieves a \csi{} above 0.35 (out of 1.0), and the most visually accurate model (Qwen3-VL, lowest \lvase{}) exhibits 0\% resistance to sycophantic pressure.
+These findings demonstrate that current medical VLMs are unsafe for clinical deployment on \emph{both} axes simultaneously, and that evaluating either axis in isolation provides a dangerously incomplete picture.
+\end{abstract}

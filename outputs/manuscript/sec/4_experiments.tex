@@ -1,0 +1,40 @@
+\section{Experimental Setup}
+\label{sec:experiments}
+
+\subsection{Models}
+We evaluate six VLMs spanning two categories:
+
+\noindent\textbf{General-purpose:}
+\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+    \item \textbf{LLaVA-1.5-7B}~\cite{liu2024llava}: Instruction-tuned multimodal LLM with CLIP visual encoder and Vicuna-7B language backbone.
+    \item \textbf{Qwen3-VL-8B}~\cite{bai2025qwen3vl}: Recent VLM with dynamic resolution and native multi-image support.
+    \item \textbf{IDEFICS2-8B}~\cite{laurencon2024idefics2}: Multimodal model based on Mistral-7B with perceiver-based vision encoding.
+\end{itemize}
+
+\noindent\textbf{Medical-specialist:}
+\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+    \item \textbf{LLaVA-Med}~\cite{li2024llava-med}: LLaVA fine-tuned on biomedical image-text pairs from PubMed.
+    \item \textbf{MedVLM-R1}~\cite{pan2025medvlm}: Medical VLM with reinforcement learning from clinical feedback.
+    \item \textbf{MedGemma}~\cite{yang2024medgemma}: Gemma-based model fine-tuned on medical imaging data.
+\end{itemize}
+
+All models are evaluated in their publicly available 7--8B parameter configurations using greedy decoding for sycophancy evaluation and temperature $\tau{=}1.0$ for \lvase{} stochastic sampling.
+
+\subsection{Datasets}
+We evaluate on three established medical VQA benchmarks:
+\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+    \item \textbf{VQA-RAD}~\cite{lau2018vqarad}: 451 test cases covering radiology images with both open-ended and yes/no questions.
+    \item \textbf{SLAKE}~\cite{liu2021slake}: 1,061 test cases spanning multiple imaging modalities (CT, MRI, X-ray) with bilingual annotations.
+    \item \textbf{PathVQA}~\cite{he2020pathvqa}: 1,000 test cases (randomly sampled from 6,719) covering pathology images with diverse question types.
+\end{itemize}
+In total, our evaluation covers \textbf{2,512 test cases} with per-case logit-level analysis across all six models.
+
+\subsection{Implementation Details}
+\noindent\textbf{\lvase{} computation.}
+For each image, we generate $N{=}5$ stochastic samples (temperature $\tau{=}1.0$, max 128 tokens) under two conditions: weak augmentation (Gaussian blur $\sigma{=}3$) and heavy distortion (Gaussian blur $\sigma{=}15$). The mixing coefficient is $\alpha{=}1.0$. We extract full logit vectors at every generated token position and compute contrastive entropy per Eq.~\ref{eq:lvase}, averaging across all tokens and samples.
+
+\noindent\textbf{Sycophancy evaluation.}
+For each question, we first obtain the model's baseline response and extract confidence from first-token logits. We then apply each of the three pressure types (expert correction, consensus, authority) in separate conversations and check whether the model's answer changes. For yes/no questions, we use binary softmax confidence; for open-ended questions, we use maximum softmax probability.
+
+\noindent\textbf{Infrastructure.}
+All experiments run on 8$\times$ NVIDIA H200 GPUs (143~GB each). Each model is evaluated independently on a dedicated GPU. We use batch inference with replicated inputs for \lvase{} sampling, achieving 2.6$\times$ speedup over sequential generation. Models are loaded in float16 precision.
