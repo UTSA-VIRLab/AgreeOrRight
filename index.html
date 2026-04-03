@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Agree or To Be Right? — The Grounding-Sycophancy Tradeoff in Medical VLMs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f7f8fa;
+      --bg-card: #ffffff;
+      --text: #1a1a2e;
+      --text-body: #3a3a4a;
+      --text-muted: #6b7085;
+      --accent: #c0392b;
+      --accent-light: #fdf0ef;
+      --blue: #2563a8;
+      --blue-light: #eef4fb;
+      --teal: #0e7c6b;
+      --teal-light: #edf8f6;
+      --border: #e5e7ed;
+      --border-light: #f0f1f5;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.07);
+      --font-serif: 'Source Serif 4', Georgia, serif;
+      --font-sans: 'Source Sans 3', -apple-system, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      line-height: 1.75;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ─── HEADER ─── */
+    header {
+      padding: 56px 0 44px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .venue {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 5px 16px;
+      border-radius: 4px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .authors-list {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .author { text-align: center; }
+
+    .author-name {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .orcid-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .orcid-link:hover { color: var(--teal); text-decoration: none; }
+
+    .orcid-icon {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background: #a6ce39;
+      border-radius: 50%;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .orcid-icon::after {
+      content: 'iD';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-sans);
+      font-size: 8px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .affiliation {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .btn:hover {
+      background: var(--bg-alt);
+      border-color: #ccc;
+      text-decoration: none;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn svg { width: 16px; height: 16px; }
+
+    .btn-paper {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-paper:hover {
+      background: #a93226;
+      border-color: #a93226;
+      color: #fff;
+    }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 48px 0; border-bottom: 1px solid var(--border-light); }
+    section:last-of-type { border-bottom: none; }
+
+    h2 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+
+    .abstract p {
+      font-family: var(--font-serif);
+      font-size: 1.02rem;
+      line-height: 1.85;
+      color: var(--text-body);
+      text-align: justify;
+    }
+
+    .key-finding {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 24px 28px;
+      margin: 28px 0 0;
+    }
+
+    .key-finding .label {
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .key-finding p {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .figure-block { margin: 32px 0; text-align: center; }
+
+    .figure-block img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .figure-caption {
+      margin-top: 12px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    .figure-caption strong { color: var(--text); }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .metric-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px;
+      transition: box-shadow 0.2s;
+    }
+
+    .metric-card:hover { box-shadow: var(--shadow-md); }
+
+    .metric-abbr {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--teal);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .metric-full {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .metric-desc {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    thead { background: var(--bg-alt); }
+
+    th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    td { padding: 12px 16px; border-bottom: 1px solid var(--border-light); color: var(--text-body); }
+    tr:last-child td { border-bottom: none; }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+
+    .tag-general { background: var(--blue-light); color: var(--blue); }
+    .tag-medical { background: var(--accent-light); color: var(--accent); }
+
+    .datasets-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .dataset-item { background: var(--bg-alt); border-radius: 8px; padding: 20px; }
+
+    .dataset-item h3 {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .dataset-item p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.55; }
+
+    .bibtex-wrapper {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 16px;
+      position: relative;
+    }
+
+    .bibtex-wrapper pre {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: var(--text-body);
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover { background: var(--bg-alt); color: var(--text); border-color: #bbb; }
+
+    footer {
+      padding: 32px 0;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    footer a { color: var(--text-muted); }
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 700px) {
+      .metrics-grid, .datasets-row { grid-template-columns: 1fr; }
+      header { padding: 36px 0 30px; }
+      .authors-list { gap: 20px; }
+      section { padding: 36px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="venue">CVPR 2026 Workshop &middot; Med-Reasoner</div>
+      <h1>To Agree or To Be Right?<br>The Grounding-Sycophancy Tradeoff in Medical Vision-Language Models</h1>
+
+      <div class="authors-list">
+        <div class="author">
+          <div class="author-name">OFM Riaz Rahman Aranya</div>
+          <a class="orcid-link" href="https://orcid.org/0000-0002-8195-2710" target="_blank">
+            <span class="orcid-icon"></span> 0000-0002-8195-2710
+          </a>
+        </div>
+        <div class="author">
+          <div class="author-name">Kevin Desai</div>
+          <a class="orcid-link" href="https://orcid.org/0000-0002-2964-8981" target="_blank">
+            <span class="orcid-icon"></span> 0000-0002-2964-8981
+          </a>
+        </div>
+      </div>
+      <div class="affiliation">Department of Computer Science, The University of Texas at San Antonio</div>
+
+      <div class="btn-row">
+        <a class="btn btn-paper" href="https://arxiv.org/abs/2603.22623" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Paper (arXiv)
+        </a>
+        <a class="btn" href="https://github.com/UTSA-VIRLab/AgreeOrRight" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Code
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABSTRACT -->
+  <section>
+    <div class="container abstract">
+      <h2>Abstract</h2>
+      <p>
+        Vision-language models (VLMs) adapted to the medical domain have shown strong performance on visual question answering benchmarks, yet their robustness against two critical failure modes — hallucination and sycophancy — remains poorly understood, particularly in combination. We evaluate six VLMs (three general-purpose, three medical-specialist) on three medical VQA datasets and uncover a <em>grounding-sycophancy tradeoff</em>: models with the lowest hallucination propensity are the most sycophantic, while the most pressure-resistant model hallucinates more than all medical-specialist models. To characterize this tradeoff, we propose three metrics: <strong>L-VASE</strong>, a logit-space reformulation of VASE that avoids its double-normalization; <strong>CCS</strong>, a confidence-calibrated sycophancy score that penalizes high-confidence capitulation; and <strong>CSI</strong> (Clinical Safety Index), a unified safety score inspired by FMEA that combines grounding, autonomy, and calibration via a geometric mean. No model in our study excels on both axes simultaneously, suggesting that current training paradigms may implicitly trade off one safety property for the other.
+      </p>
+      <div class="key-finding">
+        <div class="label">Key Finding</div>
+        <p>
+          Models that hallucinate less are the most sycophantic. Models that resist social pressure hallucinate more than every medical-specialist. <strong>No model reaches the desired safe quadrant.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIGURE 1 -->
+  <section>
+    <div class="container">
+      <h2>The Grounding–Sycophancy Tradeoff</h2>
+      <div class="figure-block">
+        <img src="figures/fig_intro.png" alt="Grounding-Sycophancy tradeoff scatter plot" style="max-width: 500px;">
+        <div class="figure-caption">
+          <strong>Figure 1.</strong> The grounding–sycophancy tradeoff on VQA-RAD (n=451). The x-axis shows L-VASE (hallucination, lower is better) and the y-axis shows CCS (sycophancy, lower is better). Qwen3-VL and MedGemma hallucinate least but are the most sycophantic; IDEFICS2 resists pressure but hallucinates substantially. No model reaches the lower-left <em>Desired</em> quadrant.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIGURE 2 -->
+  <section>
+    <div class="container">
+      <h2>Evaluation Pipeline</h2>
+      <div class="figure-block">
+        <img src="figures/pipeline.png" alt="Evaluation pipeline diagram">
+        <div class="figure-caption">
+          <strong>Figure 2.</strong> Overview of the evaluation pipeline. Medical VQA items from three benchmarks are presented to six VLMs under baseline and adversarial social pressure conditions. Model outputs are assessed using L-VASE, CCS, and CSI.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METRICS -->
+  <section>
+    <div class="container">
+      <h2>Proposed Metrics</h2>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-abbr">L-VASE</div>
+          <div class="metric-full">Logit-Level Visual Assertion Semantic Entropy</div>
+          <div class="metric-desc">Reformulates VASE in logit-space, fixing the double-normalization issue. Measures hallucination propensity from raw log-probabilities.</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-abbr">CCS</div>
+          <div class="metric-full">Confidence-Calibrated Sycophancy</div>
+          <div class="metric-desc">Weights each capitulation by the model's own logit-derived confidence. A high-confidence flip is a graver safety failure.</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-abbr">CSI</div>
+          <div class="metric-full">Clinical Safety Index</div>
+          <div class="metric-desc">Inspired by FMEA risk analysis. Combines grounding, autonomy, and calibration via geometric mean — failure on any axis is unsafe.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIGURE 3 -->
+  <section>
+    <div class="container">
+      <h2>VASE vs. L-VASE</h2>
+      <div class="figure-block">
+        <img src="figures/vase_pipeline.png" alt="VASE vs L-VASE comparison" style="max-width: 500px;">
+        <div class="figure-caption">
+          <strong>Figure 3.</strong> Side-by-side comparison of VASE (left) and our proposed L-VASE (right). VASE applies softmax to contrastive differences of probability vectors, producing invalid negatives and losing ~46% of probability mass. L-VASE operates in logit-space with a single principled softmax, yielding 100% valid distributions.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIGURE 4 -->
+  <section>
+    <div class="container">
+      <h2>Clinical Safety Index Distribution</h2>
+      <div class="figure-block">
+        <img src="figures/csi_distribution.png" alt="CSI distribution across models">
+        <div class="figure-caption">
+          <strong>Figure 4.</strong> Distribution of the Clinical Safety Index (CSI) across all evaluated models and datasets. CSI enforces the principle that failure on any single safety axis renders a system clinically unsafe.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODELS -->
+  <section>
+    <div class="container">
+      <h2>Models Evaluated</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Model</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Qwen3-VL</strong></td><td><span class="tag tag-general">General</span></td><td>Low hallucination, highest sycophancy</td></tr>
+            <tr><td><strong>LLaVA-1.5</strong></td><td><span class="tag tag-general">General</span></td><td>General-purpose VLM</td></tr>
+            <tr><td><strong>IDEFICS2</strong></td><td><span class="tag tag-general">General</span></td><td>Most pressure-resistant; higher hallucination</td></tr>
+            <tr><td><strong>MedGemma</strong></td><td><span class="tag tag-medical">Medical</span></td><td>Low hallucination, high sycophancy</td></tr>
+            <tr><td><strong>LLaVA-Med</strong></td><td><span class="tag tag-medical">Medical</span></td><td>Medical domain-adapted visual instruction model</td></tr>
+            <tr><td><strong>MedVLM-R1</strong></td><td><span class="tag tag-medical">Medical</span></td><td>Medical-specialist VLM</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATASETS -->
+  <section>
+    <div class="container">
+      <h2>Datasets</h2>
+      <div class="datasets-row">
+        <div class="dataset-item">
+          <h3>VQA-RAD</h3>
+          <p>Radiology VQA benchmark with clinician-generated question–answer pairs over radiology images.</p>
+        </div>
+        <div class="dataset-item">
+          <h3>SLAKE</h3>
+          <p>Bilingual medical VQA dataset with semantic labels, knowledge annotations, and diverse anatomical regions.</p>
+        </div>
+        <div class="dataset-item">
+          <h3>PathVQA</h3>
+          <p>Pathology-focused visual QA with open-ended and yes/no questions over pathology images.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITATION -->
+  <section>
+    <div class="container">
+      <h2>Citation</h2>
+      <p style="color: var(--text-muted); margin-bottom: 10px;">If you find this work useful in your research, please consider citing:</p>
+      <div class="bibtex-wrapper">
+        <button class="copy-btn" onclick="copyBibtex()">Copy</button>
+        <pre><code>@article{aranya2026agree,
+  title   = {To Agree or To Be Right? The Grounding-Sycophancy
+             Tradeoff in Medical Vision-Language Models},
+  author  = {Aranya, OFM Riaz Rahman and Desai, Kevin},
+  journal = {arXiv preprint arXiv:2603.22623},
+  year    = {2026}
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>
+        <a href="https://github.com/UTSA-VIRLab" target="_blank">UTSA VIRLab</a> &middot;
+        Department of Computer Science &middot;
+        The University of Texas at San Antonio
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    function copyBibtex() {
+      const text = document.querySelector('.bibtex-wrapper code').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }
+  </script>
+</body>
+</html>
